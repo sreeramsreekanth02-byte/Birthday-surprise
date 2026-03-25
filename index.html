@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Beema!</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0b2e, #4b1d52, #1a0b2e);
+            background-size: 400% 400%;
+            animation: gradientBG 10s ease infinite;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+            color: white;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        /* Background Gradient Animation */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Start Screen */
+        #start-screen {
+            position: absolute;
+            z-index: 100;
+        }
+
+        button {
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #fff;
+            background: linear-gradient(45deg, #ff007f, #ff7f00);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(255, 0, 127, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: pulse 1.5s infinite;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 12px 20px rgba(255, 0, 127, 0.6);
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Celebration Screen */
+        #celebration-screen {
+            display: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Bouncing Text */
+        .bouncing-text {
+            font-size: 4rem;
+            text-shadow: 3px 3px 0px #ff007f, 6px 6px 0px #7f00ff;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .bouncing-text span {
+            display: inline-block;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        /* Stagger the letter animations and add colors for up to 9 letters */
+        .bouncing-text span:nth-child(1) { animation-delay: 0.1s; color: #ff3366; }
+        .bouncing-text span:nth-child(2) { animation-delay: 0.2s; color: #33ccff; }
+        .bouncing-text span:nth-child(3) { animation-delay: 0.3s; color: #ffff66; }
+        .bouncing-text span:nth-child(4) { animation-delay: 0.4s; color: #66ff66; }
+        .bouncing-text span:nth-child(5) { animation-delay: 0.5s; color: #ff9933; }
+        .bouncing-text span:nth-child(6) { animation-delay: 0.6s; color: #ff33cc; }
+        .bouncing-text span:nth-child(7) { animation-delay: 0.7s; color: #33ffcc; }
+        .bouncing-text span:nth-child(8) { animation-delay: 0.8s; color: #ff3366; }
+        .bouncing-text span:nth-child(9) { animation-delay: 0.9s; color: #33ccff; }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+        }
+
+        /* Cake Animation */
+        .cake {
+            font-size: 6rem;
+            animation: rock 2s infinite ease-in-out;
+            margin-top: 20px;
+        }
+
+        @keyframes rock {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Balloons */
+        .balloon {
+            position: absolute;
+            bottom: -150px;
+            width: 60px;
+            height: 80px;
+            background-color: red;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: floatUp 8s infinite ease-in;
+            z-index: 1;
+        }
+
+        .balloon::before {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 25px;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-bottom: 10px solid inherit;
+        }
+
+        .balloon::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 29px;
+            width: 2px;
+            height: 40px;
+            background: white;
+            opacity: 0.5;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(20deg); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="start-screen">
+        <button onclick="startParty()">Click for a Surprise!</button>
+    </div>
+
+    <div id="celebration-screen">
+        <div class="bouncing-text">
+            <span>H</span><span>A</span><span>P</span><span>P</span><span>Y</span>
+        </div>
+        <div class="bouncing-text">
+            <span>B</span><span>I</span><span>R</span><span>T</span><span>H</span><span>D</span><span>A</span><span>Y</span>
+        </div>
+        <div class="bouncing-text">
+            <span>B</span><span>E</span><span>E</span><span>M</span><span>A</span><span>!</span>
+        </div>
+        <div class="cake">🎂</div>
+    </div>
+
+    <script>
+        function startParty() {
+            // Hide start screen and show celebration
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('celebration-screen').style.display = 'block';
+
+            // Fire confetti explosion
+            fireConfetti();
+
+            // Generate CSS Balloons
+            createBalloons();
+        }
+
+        function fireConfetti() {
+            const duration = 5 * 1000;
+            const animationEnd = Date.now() + duration;
+            const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+            function randomInRange(min, max) {
+                return Math.random() * (max - min) + min;
+            }
+
+            const interval = setInterval(function() {
+                const timeLeft = animationEnd - Date.now();
+
+                if (timeLeft <= 0) {
+                    return clearInterval(interval);
+                }
+
+                const particleCount = 50 * (timeLeft / duration);
+                
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+                }));
+                confetti(Object.assign({}, defaults, { 
+                    particleCount, 
+                    origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+                }));
+            }, 250);
+        }
+
+        function createBalloons() {
+            const colors = ['#ff3366', '#33ccff', '#ffff66', '#66ff66', '#ff9933', '#cc33ff'];
+            
+            for (let i = 0; i < 15; i++) {
+                let balloon = document.createElement('div');
+                balloon.className = 'balloon';
+                
+                // Randomize balloon properties
+                balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                balloon.style.left = Math.random() * 100 + 'vw';
+                balloon.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                balloon.style.animationDelay = (Math.random() * 2) + 's';
+                
+                document.body.appendChild(balloon);
+            }
+        }
+    </script>
+</body>
+</html>
